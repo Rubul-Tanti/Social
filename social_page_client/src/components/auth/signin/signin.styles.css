@@ -1,0 +1,212 @@
+
+
+
+
+.sp-root {
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+  color: var(--text-primary);
+  padding: 24px;
+}
+/* ── Card ── */
+.sp-card {
+padding:25px;
+width: 100%;
+max-width: 400px;
+}
+
+.sp-card-header { margin-bottom: 28px; }
+
+.sp-card-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+
+.sp-card-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ── Google button ── */
+.sp-google-btn {
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.15s, border-color 0.15s;
+  margin-bottom: 20px;
+}
+
+.sp-google-btn:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* ── Divider ── */
+.sp-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.sp-divider-line { flex: 1; height: 1px; background: var(--border); }
+
+.sp-divider-text {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── Fields ── */
+.sp-field { margin-bottom: 14px; }
+
+.sp-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.sp-input-wrap { position: relative; }
+.sp-input {
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-size: 14px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+
+  box-sizing: border-box;
+}
+
+.sp-input::placeholder { color: var(--text-muted); }
+
+.sp-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.sp-input-pw { padding-right: 42px; position:relative;}
+
+.sp-eye-btn {
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: color 0.15s;
+}
+
+.sp-eye-btn:hover { color: var(--text-secondary); }
+
+/* ── Forgot ── */
+.sp-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 18px;
+  margin-top: -4px;
+}
+
+.sp-forgot {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.sp-forgot:hover { text-decoration: underline; }
+
+/* ── Submit ── */
+.sp-btn {
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s;
+}
+
+.sp-btn:not(:disabled):hover { background: var(--accent-hover); }
+
+.sp-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.sp-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Footer ── */
+.sp-card-sep {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
+.sp-register {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.sp-register a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.sp-register a:hover { text-decoration: underline; }
+
+/* ── Hide unused panel ── */
+.sp-panel { display: none; }
+.sp-main { display: contents; }
+
+/* removed: .sp-panel, .sp-main, .sp-brand, .sp-panel-body, .sp-panel-footer,
+   .sp-live-badge, .sp-live-dot, .sp-panel-heading, .sp-panel-desc,
+   .sp-posts-preview, .sp-mock-post, .sp-mock-avatar, .sp-mock-content,
+   .sp-mock-name, .sp-mock-text, .sp-mock-actions — all unused */
