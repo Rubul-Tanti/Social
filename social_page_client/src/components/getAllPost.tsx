@@ -15,7 +15,7 @@ const AllPost=()=>{
    },[pagination])
    return <section style={{backgroundColor: "#f5f5f5"}} className="container-custom ">
     <div style={{padding:"0px 5px"}}>
-    {isLoading? Array.from({length:5}).map((s,i)=>
+    {isLoading? Array.from({length:5}).map((_,i)=>
     <div
     key={i}
     >

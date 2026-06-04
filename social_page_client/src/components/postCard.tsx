@@ -8,13 +8,9 @@ import {
   CardMedia,
   IconButton,
   Stack,
-  TextField,
-  Button,
-  Divider,
-  Collapse,
 } from "@mui/material";
 import type { Post } from "../api-services/post/types";
-import { Heart, MessageSquare, Send } from "lucide-react";
+import { Heart, MessageSquare } from "lucide-react";
 import usePost from "../hooks/usePost";
 import { useState } from "react";
 

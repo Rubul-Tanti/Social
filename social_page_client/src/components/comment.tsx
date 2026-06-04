@@ -2,19 +2,14 @@ import {
   Box,
   Avatar,
   Typography,
-  Card,
-  CardHeader,
-  CardContent,
-  CardMedia,
   IconButton,
-  Stack,
   TextField,
   Divider,
   Collapse,
 } from "@mui/material";
 import { useState, useEffect } from "react";          // fixed: added useEffect
 import useComment from "../hooks/useComment";
-import { MessageSquare, Send, ThumbsUp } from "lucide-react";
+import {  Send, ThumbsUp } from "lucide-react";
 import type { Comment } from "../api-services/post/types";
 
 const CommentSection = ({
