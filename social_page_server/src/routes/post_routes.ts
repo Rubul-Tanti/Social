@@ -22,7 +22,7 @@ import { asyncError, multerErrorHandler } from "../middleware/errorHandler";
 const postRoutes = express.Router();
 
 //  Posts
-postRoutes.get("/", asyncError(getAllPosts));
+postRoutes.get("/",authorizationMiddleware([]), asyncError(getAllPosts));
 postRoutes.post("/", authorizationMiddleware([]), uploadMiddleware.single("file"), asyncError(createPost));
 postRoutes.get("/:id", authorizationMiddleware([]), asyncError(getPost));
 postRoutes.put("/:id", authorizationMiddleware([]), asyncError(updatePost));
