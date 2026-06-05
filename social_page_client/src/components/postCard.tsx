@@ -149,7 +149,7 @@ const PostCard = ({ post }: { post: Post }) => {
       )}
 
       {/* Expanded Content */}
-      <Collapse in={expanded}>
+      <Collapse in={true}>
         {post.image && (
           <CardMedia
             component="img"
@@ -229,10 +229,10 @@ const PostCard = ({ post }: { post: Post }) => {
             View all {post.commentsCount} comments
           </Typography>
 
-          <CommentSection
+          {showComments&&<CommentSection
             postId={post._id}
             showComments={showComments}
-          />
+          />}
         </Box>
       </Collapse>
     </Card>

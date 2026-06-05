@@ -44,7 +44,7 @@ const AuthGuard = ({
       !user.isAuthenticated &&
       token
     ) {
-      loginWithAccessToken.mutate()
+      loginWithAccessToken.mutate  ()
       return
     }
   },[user.isAuthenticated])

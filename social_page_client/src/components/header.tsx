@@ -5,6 +5,7 @@ import { Button } from "@mui/material"
 import { useState } from "react";
 import { useAuthentication } from "../hooks/useAuthentication";
 import { toast } from "react-toastify";
+import logo from "../../public/logo.png"
 
 // const nav = [{ name: "Profile", link: "/profile", icon: <User /> }, { name: "Settings", link: "/settings", icon: <Settings2 /> }]
 const Header = () => {
@@ -25,33 +26,12 @@ const Header = () => {
   }}
 >
 <Link
-className="shadow-sm shadow-gray-400"
   to="/"
-  style={{
-    padding:"0px 4px",
-    borderRadius:"8px",
-    border:"1px solid #4ade80",
-    textDecoration: "none",
-    display: "flex",
-    alignItems: "center",
-    gap: "8px",
-  }}
+
 >
 
 
-  <h1
-    style={{
-      fontSize: "28px",
-      fontWeight: 700,
-      fontFamily: "cursive",
-      margin: 0,
-      background: "linear-gradient(to right, #4ade80, #60a5fa)",
-      WebkitBackgroundClip: "text",
-      WebkitTextFillColor: "transparent",
-    }}
-  >
-    R&P
-  </h1>
+  <img src={logo} width={70} height={50}/>
 </Link>
 
   {user.isAuthenticated ? (
@@ -81,7 +61,7 @@ className="shadow-sm shadow-gray-400"
         <User size={38} />
       )}
 
-      <p
+      {/* <p
       className="text-zinc-400"
         style={{
           display: "flex",
@@ -92,7 +72,7 @@ className="shadow-sm shadow-gray-400"
         }}
       >
         {user.userName}
-      </p>
+      </p> */}
     </div>
   ) : (
     <Link to="/signin">
