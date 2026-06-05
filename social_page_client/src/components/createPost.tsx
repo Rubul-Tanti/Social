@@ -22,10 +22,12 @@ const CreatePost = () => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [showEmojis, setShowEmojis] = useState(false);
-  const {createPost}=usePost()
-  const {user}=useUserContext()
-  const queryClient=useQueryClient()
-  const navigate=useNavigate()
+
+  const { createPost } = usePost();
+  const { user } = useUserContext();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const emojis = [
     "😀",
     "😂",
@@ -45,6 +47,7 @@ const CreatePost = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = e.target.files?.[0];
+
     if (file) {
       setImage(file);
     }
@@ -56,212 +59,279 @@ const CreatePost = () => {
   };
 
   const handleSubmit = () => {
-    const formData=new FormData()
-    if(!user.isAuthenticated){
-      return navigate("signin")
-    }
-    formData.append("content",content)
-    if(image){
-      formData.append("file",image)
+    if (!user.isAuthenticated) {
+      return navigate("/signin");
     }
 
-    createPost.mutate(formData,{onSuccess:()=>{
-         setContent("");
-    setImage(null);
-    setShowEmojis(false);
-    queryClient.invalidateQueries({queryKey:['posts']})
-      toast.success("Post created successfully")
-    },onError:()=>{
-      toast.error("Failed to create post")
-    }})
+    const formData = new FormData();
 
+    formData.append("content", content);
+
+    if (image) {
+      formData.append("file", image);
+    }
+
+    createPost.mutate(formData, {
+      onSuccess: () => {
+        setContent("");
+        setImage(null);
+        setShowEmojis(false);
+
+        queryClient.invalidateQueries({
+          queryKey: ["posts"],
+        });
+
+        toast.success("Post created successfully");
+      },
+      onError: () => {
+        toast.error("Failed to create post");
+      },
+    });
   };
 
   return (
-    <section className="container-custom" >
+    <section>
       <Paper
-      style={{boxShadow:"0 1px 2px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1)" }}
+        elevation={0}
         sx={{
-            padding:"10px",
-          p: 3,
-          mt: 3,
-          width: "100%",
-
-          borderRadius: 3,
+          mt: 2,
+          width: "95%",
+          maxWidth: "600px",
+          mx: "auto",
+          border: "1px solid #262626",
+          borderRadius: "16px",
+          backgroundColor: "#121212",
+          overflow: "hidden",
+          boxShadow:
+            "0 0 0 1px rgba(255,255,255,0.03), 0 8px 30px rgba(0,0,0,0.4)",
         }}
       >
-        <Typography
-          variant="h6"
-          component="h2"
+        {/* Header */}
+        <Box
           sx={{
-            fontWeight: 600,
-            mb: 2,
-          }}
-        >
-          Create Post
-        </Typography>
-
-        <TextField
-          fullWidth
-          multiline
-          rows={4}
-          variant="standard"
-          label="What's on your mind?"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
-
-        <div
-          style={{
             display: "flex",
-            gap: "12px",
-            marginTop: "16px",
-            position: "relative",
+            alignItems: "center",
+            gap: 1.5,
+            p: 2,
+            borderBottom: "1px solid #262626",
           }}
         >
-          {/* Image Upload */}
-          <Button
-            component="label"
-            variant="outlined"
-            startIcon={<ImageIcon />}
+          {user.profilePicture ? (
+            <img
+              src={user.profilePicture}
+              alt="Profile"
+              width={42}
+              height={42}
+              style={{
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            <Box
+              sx={{
+                width: 42,
+                height: 42,
+                borderRadius: "50%",
+                backgroundColor: "#2a2a2a",
+              }}
+            />
+          )}
+
+          <Typography
             sx={{
-              borderColor: "var(--border)",
-              color: "var(--text-secondary)",
+              fontWeight: 600,
+              fontSize: "15px",
+              color: "#fff",
             }}
           >
+            {user.userName || "Guest"}
+          </Typography>
+        </Box>
 
-            <input
-              hidden
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </Button>
+        {/* Content */}
+        <Box sx={{ p: 2 }}>
+          <TextField
+            fullWidth
+            multiline
+            rows={4}
+            placeholder="What's on your mind?"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            variant="outlined"
+            sx={{
+              "& .MuiInputBase-input": {
+                color: "#fff",
+                fontSize: "15px",
+              },
 
-          {/* Emoji Picker */}
-          <div style={{ position: "relative" }}>
-            <Button
-              variant="outlined"
-              startIcon={<EmojiEmotions />}
-              onClick={() =>
-                setShowEmojis((prev) => !prev)
-              }
+              "& .MuiInputBase-input::placeholder": {
+                color: "#888",
+                opacity: 1,
+              },
+
+              "& fieldset": {
+                border: "none",
+              },
+
+              "& .MuiOutlinedInput-root": {
+                padding: 0,
+              },
+            }}
+          />
+
+          {/* Image Preview */}
+          {image && (
+            <Box
               sx={{
-                borderColor: "var(--border)",
-                color: "var(--text-secondary)",
+                mt: 2,
+                position: "relative",
               }}
             >
-            </Button>
-
-            {showEmojis && (
-              <Paper
-                elevation={4}
+              <IconButton
+                size="small"
+                onClick={() => setImage(null)}
                 sx={{
                   position: "absolute",
-                  top: "50px",
-                  left: 0,
-                  zIndex: 100,
-                  p: 1.5,
-                  display: "grid",
-                  gridTemplateColumns:
-                    "repeat(4, 1fr)",
-                  gap: 1,
-                  borderRadius: 2,
-                  minWidth: "200px",
+                  top: 10,
+                  right: 10,
+                  backgroundColor: "#1f1f1f",
+                  color: "#fff",
+                  zIndex: 2,
+
+                  "&:hover": {
+                    backgroundColor: "#2a2a2a",
+                  },
                 }}
               >
-                {emojis.map((emoji) => (
-                  <button
-                    key={emoji}
-                    onClick={() => addEmoji(emoji)}
-                    style={{
-                      border: "none",
-                      background: "transparent",
-                      cursor: "pointer",
-                      fontSize: "24px",
-                      padding: "6px",
-                    }}
-                  >
-                    {emoji}
-                  </button>
-                ))}
-              </Paper>
-            )}
-          </div>
-        </div>
+                <CloseIcon fontSize="small" />
+              </IconButton>
 
-        {/* Image Preview */}
-        {image && (
+              <img
+                src={URL.createObjectURL(image)}
+                alt="Preview"
+                style={{
+                  width: "100%",
+                  maxHeight: "500px",
+                  objectFit: "cover",
+                  borderRadius: "12px",
+                }}
+              />
+            </Box>
+          )}
+
+          {/* Actions */}
           <Box
             sx={{
               mt: 2,
-              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
           >
-            <IconButton
-              size="small"
-              onClick={() => setImage(null)}
+            <Box
               sx={{
-                position: "absolute",
-                top: 10,
-                right: 10,
-                backgroundColor: "#fff",
-                color: "#000",
-                boxShadow:
-                  "0 2px 8px rgba(0,0,0,0.15)",
-                zIndex: 2,
+                display: "flex",
+                gap: 1,
+                position: "relative",
+              }}
+            >
+              {/* Image Upload */}
+              <IconButton
+                component="label"
+                sx={{
+                  color: "#bdbdbd",
+                }}
+              >
+                <ImageIcon />
+                <input
+                  hidden
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
+              </IconButton>
+
+              {/* Emoji Picker */}
+              <Box sx={{ position: "relative" }}>
+                <IconButton
+                  sx={{
+                    color: "#bdbdbd",
+                  }}
+                  onClick={() =>
+                    setShowEmojis((prev) => !prev)
+                  }
+                >
+                  <EmojiEmotions />
+                </IconButton>
+
+                {showEmojis && (
+                  <Paper
+                    elevation={4}
+                    sx={{
+                      position: "absolute",
+                      bottom: "50px",
+                      left: 0,
+                      zIndex: 100,
+                      p: 1.5,
+                      display: "grid",
+                      gridTemplateColumns:
+                        "repeat(4, 1fr)",
+                      gap: 1,
+                      borderRadius: 2,
+                      minWidth: "220px",
+                      backgroundColor: "#1b1b1b",
+                      border: "1px solid #333",
+                    }}
+                  >
+                    {emojis.map((emoji) => (
+                      <button
+                        key={emoji}
+                        onClick={() => addEmoji(emoji)}
+                        style={{
+                          border: "none",
+                          background: "transparent",
+                          cursor: "pointer",
+                          fontSize: "24px",
+                          padding: "6px",
+                        }}
+                      >
+                        {emoji}
+                      </button>
+                    ))}
+                  </Paper>
+                )}
+              </Box>
+            </Box>
+
+            {/* Share Button */}
+            <Button
+              variant="contained"
+              disabled={!content.trim() && !image}
+              onClick={handleSubmit}
+              sx={{
+                background:
+                  "linear-gradient(135deg, #4ade80 0%, #60a5fa 100%)",
+                textTransform: "none",
+                borderRadius: "10px",
+                px: 4,
+                fontWeight: 700,
+                color: "#fff",
 
                 "&:hover": {
-                  backgroundColor: "#f5f5f5",
+                  background:
+                    "linear-gradient(135deg, #22c55e 0%, #3b82f6 100%)",
+                },
+
+                "&.Mui-disabled": {
+                  background: "#2d3748",
+                  color: "#777",
                 },
               }}
             >
-              <CloseIcon fontSize="small" />
-            </IconButton>
-
-            <Typography
-              variant="body2"
-              sx={{
-                mb: 1,
-                color: "text.secondary",
-              }}
-            >
-              {image.name}
-            </Typography>
-
-            <img
-              src={URL.createObjectURL(image)}
-              alt="Preview"
-              style={{
-                maxWidth:"350px",
-                width: "auto",
-                height:"auto",
-                maxHeight: "350px",
-                objectFit: "contain",
-                borderRadius: "12px",
-                display: "block",
-              }}
-            />
+              {createPost.isPending ? "Posting..." : "Share"}
+            </Button>
           </Box>
-        )}
-
-        <Box
-          sx={{
-            mt: 3,
-            display: "flex",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Button
-            variant="contained"
-            disabled={
-              !content.trim() && !image
-            }
-            onClick={handleSubmit}
-          >{
-            createPost.isPending ? "Posting..." :"Post"
-          }
-          </Button>
         </Box>
       </Paper>
     </section>
