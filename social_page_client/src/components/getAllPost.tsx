@@ -35,9 +35,11 @@ queryClient.invalidateQueries({queryKey:['posts']})
         Array.from({ length: 5 }).map((_, i) => (
           <Box key={i} sx={{ mb: 2 }}>
             <Skeleton
+            className="container-custom"
               variant="rectangular"
               height={250}
               sx={{ borderRadius: 2 }}
+              style={{backgroundColor:"#3f3f46",maxWidth:600}}
             />
           </Box>
         ))
