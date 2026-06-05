@@ -1,6 +1,6 @@
 import { Link } from "react-router"
 import { useUserContext } from "../contextProvider"
-import { ChevronDownIcon, Loader, LogOut, User } from "lucide-react"
+import {  Loader, LogOut, User } from "lucide-react"
 import { Button } from "@mui/material"
 import { useState } from "react";
 import { useAuthentication } from "../hooks/useAuthentication";
