@@ -70,95 +70,228 @@ const CommentSection = ({
 
 
   return (
-    <Collapse in={showComments}>
-      <Divider />
+  <Collapse in={showComments}>
+    <Divider
+      sx={{
+        borderColor: "#262626",
+      }}
+    />
 
-      {/* Comment Input */}
-      <Box
-        sx={{ px: 2, py: 1.5, display: "flex", gap: 1, alignItems: "center" }}
+    {/* Comment Input */}
+    <Box
+      sx={{
+        p: 2,
+        display: "flex",
+        gap: 1,
+        alignItems: "center",
+        backgroundColor: "#121212",
+      }}
+    >
+      <TextField
+        fullWidth
+        size="small"
+        placeholder="Write a comment..."
+        value={commentInput}
+        onChange={(e) => setCommentInput(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmitComment();
+          }
+        }}
+        sx={{
+          "& .MuiOutlinedInput-root": {
+            backgroundColor: "#1a1a1a",
+            color: "#fff",
+            borderRadius: 3,
+
+            "& fieldset": {
+              borderColor: "#333",
+            },
+
+            "&:hover fieldset": {
+              borderColor: "#555",
+            },
+
+            "&.Mui-focused fieldset": {
+              borderColor: "#8b5cf6",
+            },
+          },
+
+          "& .MuiInputBase-input::placeholder": {
+            color: "#888",
+            opacity: 1,
+          },
+        }}
+      />
+
+      <IconButton
+        onClick={handleSubmitComment}
+        disabled={!commentInput.trim() || createComment.isPending}
+        sx={{
+          color: "#8b5cf6",
+
+          "&:hover": {
+            backgroundColor: "rgba(139,92,246,0.15)",
+          },
+        }}
       >
-        <TextField
-          fullWidth
-          size="small"
-          placeholder="Write a comment..."
-          value={commentInput}
-          onChange={(e) => setCommentInput(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              handleSubmitComment();
-            }
+        <Send size={20} />
+      </IconButton>
+    </Box>
+
+    <Divider sx={{ borderColor: "#262626" }} />
+
+    {/* Comment List */}
+    <Box
+      sx={{
+        px: 2,
+        py: 1,
+        maxHeight: 320,
+        overflowY: "auto",
+        backgroundColor: "#121212",
+
+        "&::-webkit-scrollbar": {
+          width: 6,
+        },
+
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "#333",
+          borderRadius: 10,
+        },
+      }}
+    >
+      {commentsLoading ? (
+        <Typography
+          variant="body2"
+          sx={{
+            py: 2,
+            color: "#888",
           }}
-          multiline
-          maxRows={4}
-        />
-        <IconButton
-          onClick={handleSubmitComment}
-          disabled={!commentInput.trim() || createComment.isPending}
-          color="primary"
         >
-          <Send size={20} />
-        </IconButton>
-      </Box>
+          Loading comments...
+        </Typography>
+      ) : localComments.length === 0 ? (
+        <Typography
+          variant="body2"
+          sx={{
+            py: 2,
+            color: "#888",
+          }}
+        >
+          No comments yet. Be the first!
+        </Typography>
+      ) : (
+        localComments.map((comment) => (
+          <Box
+            key={comment._id}
+            sx={{
+              display: "flex",
+              gap: 1.5,
+              py: 1.5,
+            }}
+          >
+            <Avatar
+              src={comment?.userId?.profilePicture}
+              alt={comment?.userId?.userName}
+              sx={{
+                width: 32,
+                height: 32,
+                mt: 0.5,
+              }}
+            />
 
-      <Divider />
-
-      {/* Comment List */}
-      <Box sx={{ px: 2, py: 1, maxHeight: 320, overflowY: "auto" }}>
-        {commentsLoading ? (
-          <Typography variant="body2" color="text.secondary" sx={{ py: 1 }}>
-            Loading comments...
-          </Typography>
-        ) : localComments.length === 0 ? (       // fixed: localComments not commentsData
-          <Typography variant="body2" color="text.secondary" sx={{ py: 1 }}>
-            No comments yet. Be the first!
-          </Typography>
-        ) : (
-          localComments.map((comment) => (        // fixed: localComments not commentsData
-            <Box key={comment._id} sx={{ display: "flex", gap: 1.5, py: 1.5 }}>
-              <Avatar
-                src={comment?.userId?.profilePicture}
-                alt={comment?.userId?.userName}
-                sx={{ width: 32, height: 32, mt: 0.5 }}
-              />
-              <Box
+            <Box
+              sx={{
+                flex: 1,
+                backgroundColor: "#1a1a1a",
+                border: "1px solid #262626",
+                borderRadius: 3,
+                px: 1.5,
+                py: 1,
+              }}
+            >
+              <Typography
+                variant="subtitle2"
                 sx={{
-                  backgroundColor: "#f0f2f5",
-                  borderRadius: 3,
-                  px: 1.5,
-                  py: 1,
-                  flex: 1,
+                  color: "#fff",
+                  fontWeight: 600,
                 }}
               >
-                <Typography variant="subtitle2">
-                  {comment?.userId?.userName}
-                </Typography>
-                <Typography variant="body2" sx={{ whiteSpace: "pre-line" }}>
-                  {comment?.content}
-                </Typography>
-                <div style={{display:"flex", flexDirection:"row", gap:10,alignItems:"center"}}>
+                {comment?.userId?.userName}
+              </Typography>
 
+              <Typography
+                variant="body2"
+                sx={{
+                  whiteSpace: "pre-line",
+                  color: "#d1d5db",
+                  mt: 0.5,
+                }}
+              >
+                {comment?.content}
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 2,
+                  mt: 1,
+                }}
+              >
                 <Typography
                   variant="caption"
-                  style={{ fontSize: "10px" }}
-                  color="text.secondary"
-                  >
-                  {new Date(comment?.createdAt).toLocaleDateString()}
+                  sx={{
+                    color: "#777",
+                    fontSize: "11px",
+                  }}
+                >
+                  {new Date(
+                    comment?.createdAt
+                  ).toLocaleDateString()}
                 </Typography>
 
-                    <button onClick={()=>{handleLikeUnlike(comment)}} style={{display:"flex",gap:"5px",border:'none'}}>
-                        <ThumbsUp fill={comment.liked?"black":"white"}  style={{cursor:'pointer',}}  size={14}/>
-                    {comment.likes}
-                    </button>
-                    {/* <MessageSquare size={14}/> */}
-                    </div>
+                <button
+                  onClick={() =>
+                    handleLikeUnlike(comment)
+                  }
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    border: "none",
+                    background: "transparent",
+                    color: comment.liked
+                      ? "#8b5cf6"
+                      : "#888",
+                    cursor: "pointer",
+                    fontSize: "12px",
+                  }}
+                >
+                  <ThumbsUp
+                    size={14}
+                    fill={
+                      comment.liked
+                        ? "#8b5cf6"
+                        : "none"
+                    }
+                    color={
+                      comment.liked
+                        ? "#8b5cf6"
+                        : "#888"
+                    }
+                  />
+                  {comment.likes || 0}
+                </button>
               </Box>
             </Box>
-          ))
-        )}
-      </Box>
-    </Collapse>
-  );
+          </Box>
+        ))
+      )}
+    </Box>
+  </Collapse>
+);
 };
 
 export default CommentSection;

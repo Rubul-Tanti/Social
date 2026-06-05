@@ -27,7 +27,8 @@ api.interceptors.response.use(
   async(error) => {
 
     if (error.response?.status === 401) {
-      if(localStorage.getItem('access_token')){
+     const token= localStorage.getItem('access_token')
+      if(token){
         handleRefreshAccessToken()
         console.log("Unauthorized - token expired");
       return

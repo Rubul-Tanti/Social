@@ -67,19 +67,19 @@ export default function Login() {
   });
 
   return (
-    <div className="sp-root" style={{position:"relative"}}>
+    <div className="sp-root " style={{position:"relative",backgroundColor:"#0f0f11"}}>
        <header className="container-custom " style={{ position:"absolute",top:"0px" }}>
-        <h1 style={{ fontSize: "24px",width:"100%",padding:"10px" }}><Link to="/"><InterestsIcon />SOCIAL </Link></h1>
+        <h1 style={{ fontSize: "24px",color:'#f0f0f2',width:"100%",padding:"10px" }}><Link style={{color:'#f0f0f2'}}to="/"><InterestsIcon />BuBu login </Link></h1>
 
         </header>
-      <div className="sp-card ">
+      <div style={{backgroundColor:"#0f0f11",padding:"20px",borderRadius:"8px"}} className="shadow-sm border border-zinc-950  ">
 
         <div className="sp-card-header">
-          <h1 className="sp-card-title">Welcome back</h1>
+          <h1 className="sp-card-title" style={{color:'white'}}>Welcome back</h1>
           <p className="sp-card-sub">Sign in to see posts from your community.</p>
         </div>
 
-        <button className="sp-google-btn" onClick={() => handleGoogle()} type="button">
+        <button className="flex w-full justify-center gap-2 items-center border rounded-lg border-zinc-800 mx-auto" style={{color:'white',padding:"8px"}} onClick={() => handleGoogle()} type="button">
           <svg width="17" height="17" viewBox="0 0 18 18" fill="none">
             <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
             <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
@@ -101,7 +101,7 @@ export default function Login() {
 
         <form onSubmit={handleSubmit}>
           <div className="sp-field">
-            <label htmlFor="email" className="sp-label">Email</label>
+            <label htmlFor="email" className="sp-label" style={{color:"white"}}>Email</label>
             <input
               id="email"
               type="email"
@@ -115,7 +115,7 @@ export default function Login() {
           </div>
 
           <div className="sp-field">
-            <label htmlFor="password" className="sp-label">Password</label>
+            <label htmlFor="password" className="sp-label" style={{color:"white"}}>Password</label>
             <div className="sp-input-wrap">
               <input
                 id="password"

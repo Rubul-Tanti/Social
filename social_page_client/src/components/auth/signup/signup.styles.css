@@ -19,6 +19,26 @@
   --font: 'Inter', sans-serif;
 }
 
+/* ── Dark Mode ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --surface: #1e1e1e;
+    --bg-subtle: #2a2a2a;
+    --border: #404040;
+    --text-primary: #e8e8e8;
+    --text-secondary: #b0b0b0;
+    --text-muted: #808080;
+    --accent: #8b5cf6;
+    --accent-hover: #7c3aed;
+    --accent-light: #4c1d95;
+    --success: #22c55e;
+    --success-light: #051f0f;
+    --success-border: #166534;
+    --danger: #f87171;
+  }
+}
+
 /* ── Root ── */
 .sl-root {
   min-height: 100vh;

@@ -16,7 +16,15 @@
   }
 
   body{
-    background-color:	black;
+    background-color: #121212;
+    color: #e8e8e8;
+  }
+
+  @media (prefers-color-scheme: light) {
+    body {
+      background-color: #ffffff;
+      color: #111827;
+    }
   }
 
 :root {
@@ -31,4 +39,18 @@
   --accent-light: #eff6ff;
   --radius: 8px;
   --font: 'Inter', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --surface: #1e1e1e;
+    --border: #404040;
+    --text-primary: #e8e8e8;
+    --text-secondary: #b0b0b0;
+    --text-muted: #808080;
+    --accent: #8b5cf6;
+    --accent-hover: #7c3aed;
+    --accent-light: #4c1d95;
+  }
 }

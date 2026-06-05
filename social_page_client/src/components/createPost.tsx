@@ -245,9 +245,10 @@ const CreatePost = () => {
               >
                 <ImageIcon />
                 <input
-                  hidden
+                hidden
                   type="file"
                   accept="image/*"
+                    style={{ display: "none" }}
                   onChange={handleImageChange}
                 />
               </IconButton>

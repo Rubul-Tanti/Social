@@ -115,10 +115,10 @@ className="shadow-sm shadow-gray-400"
         top: "70px",
         right: "20px",
         width: "180px",
-        background: "#fff",
-        border: "1px solid #dbdbdb",
+        background: "#1e1e1e",
+        border: "1px solid #404040",
         borderRadius: "12px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
         overflow: "hidden",
       }}
     >

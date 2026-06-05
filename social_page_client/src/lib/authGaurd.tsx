@@ -15,7 +15,6 @@ const notAllowedWithLogin = [
 ]
 
 
-const adminRoles = ["ADMIN"]
 
 const AuthGuard = ({
   children,
@@ -30,21 +29,15 @@ const AuthGuard = ({
 
   const navigate = useNavigate()
 
-  const isProtected = path.startsWith("/admin")
-
-  const isAuthRoute = notAllowedWithLogin.includes(path)
-
-
-
-  const hasAdminAccess =
-    user.role !== null &&
-    adminRoles.includes(user.role)
-
   useEffect(() => {
     const token =
       localStorage.getItem(
         "access_token"
       )
+      if(notAllowedWithLogin.includes(path)&&user.isAuthenticated){
+        navigate("/")
+        return
+      }
 
     // Auto login
     if (
@@ -52,69 +45,13 @@ const AuthGuard = ({
       token
     ) {
       loginWithAccessToken.mutate()
-
       return
     }
+  },[user.isAuthenticated])
 
-    // Protected route
-    if (
-      !user.isAuthenticated &&
-      isProtected
-    ) {
-      navigate("/signin", {
-        replace: true,
-      })
-
-      return
-    }
-
-    // No admin access
-    if (
-      user.isAuthenticated &&
-      isProtected &&
-      !hasAdminAccess
-    ) {
-      navigate("/", {
-        replace: true,
-      })
-
-      return
-    }
-
-    // Already logged in
-    if (
-      user.isAuthenticated &&
-      isAuthRoute
-    ) {
-      navigate("/", {
-        replace: true,
-      })
-    }
-  }, [
-    path,
-    user.isAuthenticated,
-    user.role,
-  ])
-
-  if (
-    !user.isAuthenticated &&
-    isProtected
-  )
-    return null
-
-  if (
-    user.isAuthenticated &&
-    isProtected &&
-    !hasAdminAccess
-  )
-    return null
-
-  if (
-    user.isAuthenticated &&
-    isAuthRoute
-  )
-    return null
-
+  if(user.isAuthenticated&&notAllowedWithLogin.includes(path))
+    return <></>
+    else
   return <>{children}</>
 }
 
