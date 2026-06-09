@@ -19,10 +19,10 @@ const Header = () => {
     position: "sticky",
     top: 0,
     zIndex: 100,
+    paddingRight:"10px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "12px 20px",
   }}
 >
 <Link
