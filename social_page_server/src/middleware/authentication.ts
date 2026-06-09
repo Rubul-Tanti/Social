@@ -155,10 +155,16 @@ const authorizationMiddleware = (
       return
     }
 
-    const token =
-      extractBearerToken(req)
+
+    const token =extractBearerToken(req)
+
+    if(requiredRole.length==0&&!token){
+      next()
+      return
+    }
 
     if (!token) {
+
       res.status(401).json({
         message:
           "No authorization header found",
@@ -168,11 +174,11 @@ const authorizationMiddleware = (
     }
 
     try {
-      const { userId } =
-        verifyToken(token)
+      const { userId } =verifyToken(token)
 
       const user =
         await User.findById(userId)
+
 
       if (!user) {
         res.status(401).json({
@@ -205,6 +211,10 @@ const authorizationMiddleware = (
       if (
         e instanceof TokenExpiredError
       ) {
+            if(requiredRole.length){
+      next()
+      return
+    }
         res.status(401).json({
           message: "Token expired",
         })
@@ -215,6 +225,11 @@ const authorizationMiddleware = (
       if (
         e instanceof JsonWebTokenError
       ) {
+
+            if(requiredRole.length){
+      next()
+      return
+    }
         res.status(401).json({
           message: "Invalid token",
         })
