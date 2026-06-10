@@ -35,9 +35,6 @@ api.interceptors.response.use(
         console.log("Unauthorized - token expired");
       return
       }
-      if(window.location.pathname!=="/signin"){
-        window.location.href="/signin"
-      }
     }
     return Promise.reject(error);
   }
