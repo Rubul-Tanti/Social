@@ -308,7 +308,7 @@ const CreatePost = () => {
             {/* Share Button */}
             <Button
               variant="contained"
-              disabled={!content.trim() && !image}
+              disabled={createPost.isPending ||!content.trim() && !image}
               onClick={handleSubmit}
               sx={{
                 background:
